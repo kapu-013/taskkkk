@@ -7,7 +7,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
     <style>
         :root {
             --primary-color: #00a8ff;
@@ -15,7 +14,6 @@
             --text-dark: #2f3640;
             --card-white: #ffffff;
         }
-
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
@@ -23,6 +21,7 @@
             color: var(--text-dark);
             scroll-behavior: smooth;
             transition: 0.4s;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
         /* ===== LOADER ===== */
@@ -47,24 +46,19 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* ===== DARK MODE STYLES ===== */
-        .dark-mode {
-            background: #1e272e;
-            color: #ffffff;
-        }
-        .dark-mode nav { background: rgba(0,0,0,0.9); }
-        .dark-mode .card, .dark-mode form, .dark-mode .stats-card {
-            background: #2f3640;
-            color: white;
-        }
+        .dark-mode { background: #1e272e; color: #ffffff; }
+        .dark-mode nav { background: rgba(0,0,0,0.5); }
+        .dark-mode .card, .dark-mode form { background: rgba(47, 54, 64, 0.9); color: white; }
         .dark-mode .contact { background: #182026; }
         .dark-mode input, .dark-mode textarea { background: #3d4852; color: white; border: 1px solid #555; }
 
-        /* ===== PREMIUM NAVBAR ===== */
+        /* STEP 2 – Glassmorphism Navbar (Responsive) */
         nav {
-            background: rgba(47, 54, 64, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
             color: white;
-            padding: 15px 40px;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -74,69 +68,123 @@
             z-index: 1000;
             box-sizing: border-box;
         }
-        nav a { color: white; text-decoration: none; margin-left: 20px; position: relative; font-weight: 500; }
-        nav a::after { content: ""; position: absolute; width: 0%; height: 2px; background: var(--primary-color); left: 0; bottom: -5px; transition: 0.3s; }
-        nav a:hover::after { width: 100%; }
+        nav a { color: white; text-decoration: none; margin-left: 15px; font-weight: 500; font-size: 14px; transition: 0.3s; }
+        nav a:hover { color: var(--primary-color); }
 
-        #themeToggle {
-            background: none; border: 1px solid white; color: white; cursor: pointer;
-            padding: 5px 10px; border-radius: 20px; margin-left: 20px; font-size: 18px;
-        }
-
-        /* ===== HERO ===== */
+        /* STEP 1 – Hero Section Ultra Premium (Responsive) */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("https://picsum.photos/1600/900");
-            background-size: cover; background-position: center; background-attachment: fixed;
-            color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(135deg, #000428, #004e92);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
         }
-        .hero h1 { font-size: 50px; margin-bottom: 10px; }
-        .hero button {
-            padding: 14px 35px; border: none; background: #e84118; color: white;
-            font-size: 18px; font-weight: bold; border-radius: 50px; cursor: pointer; transition: 0.3s;
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        .hero button:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(232, 65, 24, 0.6); }
+        .hero h1 {
+            font-size: clamp(32px, 8vw, 60px); /* Responsive Font Size */
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(0,0,0,0.6);
+            margin-bottom: 15px;
+        }
+        .hero p { font-size: clamp(14px, 4vw, 18px); margin-bottom: 25px; }
 
-        /* ===== STATS SECTION ===== */
+        /* STEP 3 – Ultra Glow Buttons */
+        .hero button, .submit-btn {
+            background: linear-gradient(45deg, #00a8ff, #9c88ff);
+            border: none;
+            color: white;
+            padding: 14px 35px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 0 15px rgba(0,168,255,0.6);
+        }
+        .hero button:hover, .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(156,136,255,0.9);
+        }
+
+        /* STEP 5 – Stats Section Premium Look (Responsive) */
         .stats {
-            padding: 60px 20px; display: flex; justify-content: center; gap: 50px;
-            text-align: center; background: var(--primary-color); color: white;
+            padding: 60px 20px;
+            display: flex;
+            flex-wrap: wrap; /* Wraps on mobile */
+            justify-content: center;
+            gap: 40px;
+            text-align: center;
+            background: linear-gradient(45deg, #141e30, #243b55);
+            color: white;
         }
-        .stats-card h3 { font-size: 40px; margin: 0; }
+        .stats-card { flex: 1; min-width: 150px; }
+        .stats-card h3 { font-size: clamp(30px, 5vw, 45px); margin: 0; }
 
-        /* ===== CARDS ===== */
+        /* STEP 4 – Card Hover 3D Effect (Responsive) */
         .services { padding: 80px 20px; text-align: center; }
-        .card-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; margin-top: 40px; }
+        .card-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
+            max-width: 1200px; 
+            margin: 40px auto 0; 
+        }
         .card {
-            background: white; width: 280px; padding: 30px; border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.4s;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: 0.4s;
         }
-        .card:hover { transform: translateY(-15px); box-shadow: 0 15px 30px rgba(0,168,255,0.3); }
+        .card:hover {
+            transform: rotateY(10deg) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,168,255,0.4);
+        }
 
-        /* ===== CONTACT ===== */
-        .contact { background: #dcdde1; padding: 80px 20px; text-align: center; transition: 0.4s; }
-        form { max-width: 450px; margin: auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
-        input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 8px rgba(0,168,255,0.4); }
-
-        .submit-btn { background: #44bd32; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
-        .submit-btn:hover { transform: scale(1.05); background: #2ecc71; }
-
-        /* ===== TOP BUTTON ===== */
+        /* ===== CONTACT & FORM ===== */
+        .contact { background: #dcdde1; padding: 80px 20px; text-align: center; }
+        form { 
+            max-width: 500px; 
+            margin: auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+        }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; font-family: inherit; }
+        
+        /* Floating Button */
         #topBtn {
-            position: fixed; bottom: 30px; right: 30px; padding: 15px; border: none;
+            position: fixed; bottom: 20px; right: 20px; padding: 12px 15px; border: none;
             background: var(--primary-color); color: white; border-radius: 50%;
-            display: none; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: none; cursor: pointer; z-index: 1000;
         }
 
-        footer { background: #2f3640; color: white; text-align: center; padding: 20px; }
-        .error { color: #e84118; font-size: 12px; text-align: left; }
+        footer { background: #2f3640; color: white; text-align: center; padding: 25px; font-size: 14px; }
+        .error { color: #e84118; font-size: 12px; text-align: left; margin-top: -5px; }
+
+        /* ===== MOBILE MEDIA QUERIES ===== */
+        @media (max-width: 600px) {
+            nav { padding: 15px 20px; }
+            nav b { font-size: 14px; }
+            nav a { margin-left: 10px; font-size: 12px; }
+            .hero { padding-top: 60px; }
+            form { padding: 20px; }
+        }
     </style>
 </head>
 <body>
-
     <div id="loader"><div class="spinner"></div></div>
-
     <button id="topBtn">↑</button>
 
     <nav>
@@ -192,15 +240,12 @@
         <form id="contactForm" data-aos="zoom-in-up">
             <input type="text" id="name" placeholder="Full Name">
             <div class="error" id="nameError"></div>
-
             <input type="text" id="email" placeholder="Email Address">
             <div class="error" id="emailError"></div>
-
             <textarea id="message" rows="4" placeholder="Your Message"></textarea>
             <div class="error" id="messageError"></div>
-
             <button type="submit" class="submit-btn">Send Message</button>
-            <div id="successMsg" style="margin-top:10px; color:green; font-weight:bold;"></div>
+            <div id="successMsg" style="margin-top:10px; color:green; font-weight:bold; min-height: 20px;"></div>
         </form>
     </section>
 
@@ -208,30 +253,29 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // 1. Initialize AOS (Scroll Animations)
+        // AOS Animation
         AOS.init({ duration: 1000, once: true });
 
-        // 2. Loader
+        // Loader & Counter Start
         window.onload = () => {
-            document.getElementById("loader").style.fadeOut = "slow";
             setTimeout(() => { document.getElementById("loader").style.display = "none"; }, 500);
             startCounters();
         };
 
-        // 3. Dark/Light Mode Toggle
+        // Dark Mode Toggle
         const themeBtn = document.getElementById("themeToggle");
         themeBtn.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
             themeBtn.innerText = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
         });
 
-        // 4. Animated Counters
+        // Counters Logic
         function startCounters() {
             const counters = document.querySelectorAll('.counter');
             counters.forEach(counter => {
                 const updateCount = () => {
                     const target = +counter.getAttribute('data-target');
-                    const count = +counter.innerText;
+                    const count = +counter.innerText.replace('+','');
                     const speed = target / 100;
                     if (count < target) {
                         counter.innerText = Math.ceil(count + speed);
@@ -244,20 +288,22 @@
             });
         }
 
-        // 5. Back to Top Button
+        // STEP 6 – Smooth Reveal Logic
+        document.querySelectorAll(".card").forEach(card => {
+            card.addEventListener("mouseenter", () => {
+                card.style.transition = "0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+            });
+        });
+
+        // Scroll Functions
         const topBtn = document.getElementById("topBtn");
         window.onscroll = () => {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                topBtn.style.display = "block";
-            } else {
-                topBtn.style.display = "none";
-            }
+            topBtn.style.display = (window.scrollY > 300) ? "block" : "none";
         };
         topBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
         function scrollToContact(){ document.getElementById("contact").scrollIntoView({ behavior: "smooth" }); }
 
-        // 6. Professional Form Validation (Email Regex)
+        // Form Validation
         document.getElementById("contactForm").addEventListener("submit", function(e){
             e.preventDefault();
             let name = document.getElementById("name").value.trim();
@@ -267,14 +313,15 @@
             let valid = true;
 
             document.querySelectorAll(".error").forEach(el => el.innerText = "");
-
+            
             if(name === "") { document.getElementById("nameError").innerText = "Name is required"; valid = false; }
-            if(!email.match(emailPattern)) { document.getElementById("emailError").innerText = "Enter a valid email address"; valid = false; }
+            if(!email.match(emailPattern)) { document.getElementById("emailError").innerText = "Valid email required"; valid = false; }
             if(message === "") { document.getElementById("messageError").innerText = "Message cannot be empty"; valid = false; }
-
+            
             if(valid){
                 document.getElementById("successMsg").innerText = "Message Sent Successfully ✅";
                 this.reset();
+                setTimeout(() => { document.getElementById("successMsg").innerText = ""; }, 3000);
             }
         });
     </script>
